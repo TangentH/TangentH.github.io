@@ -1,0 +1,41 @@
+# Site-wide settings. Personal details belong in _data/profile.yml.
+title: Tingjun Huang
+description: "Tingjun Huang is an MSc student in Robotics, Systems and Control at ETH Zurich, interested in embodied AI and 3D vision."
+url: "https://tangenth.github.io"
+baseurl: ""
+repository: TangentH/TangentH.github.io
+lang: en
+timezone: Europe/Zurich
+encoding: utf-8
+markdown: kramdown
+theme: null
+kramdown:
+  input: GFM
+  hard_wrap: false
+include:
+  - _pages
+collections:
+  projects:
+    output: false
+  experience:
+    output: false
+  publications:
+    output: false
+plugins:
+  - jekyll-sitemap
+  - jekyll-redirect-from
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - DEPLOYMENT_GUIDE.md
+  - QUICK_FIX.md
+  - LICENSE
+  - templates
+  - scripts
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+  - .github
+  - run_server.sh
+  - verify-deployment.sh

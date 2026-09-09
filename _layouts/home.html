@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title | escape }}</title>
+  <meta name="description" content="{{ site.description | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site.title | escape }}">
+  <meta property="og:description" content="{{ site.description | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M%S' }}">
+  <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}" sizes="any">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  {% assign profile = site.data.profile %}
+  <div class="site-wrap">
+    <header class="intro" id="about-me">
+      <div class="intro-copy">
+        <h1>{{ profile.name | escape }}</h1>
+        <p class="affiliation">{{ profile.role | escape }}<br><a href="{{ profile.affiliation_url }}">{{ profile.affiliation | escape }}</a><span class="location"> · {{ profile.location | escape }}</span></p>
+        <div class="bio">{{ content }}</div>
+        <nav class="contact-links" aria-label="Contact and profiles">
+          {% if profile.email and profile.email != '' %}<a href="mailto:{{ profile.email }}">Email</a>{% endif %}
+          {% if profile.cv and profile.cv != '' %}<a href="{{ profile.cv | relative_url }}">CV</a>{% endif %}
+          {% if profile.github and profile.github != '' %}<a href="{{ profile.github }}">GitHub</a>{% endif %}
+          {% if profile.scholar and profile.scholar != '' %}<a href="{{ profile.scholar }}">Google Scholar</a>{% endif %}
+        </nav>
+      </div>
+      {% if profile.photo and profile.photo != '' %}<img class="portrait" src="{{ profile.photo | relative_url }}" alt="{{ profile.photo_alt | escape }}" width="188" height="188">{% endif %}
+    </header>
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#research">Research &amp; projects</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#more">Additional information</a>
+    </nav>
+    <main id="main">
+      {% assign visible_entries = site.publications | where_exp: 'item', 'item.visible != false' %}
+      {% assign unnumbered_entries = visible_entries | where_exp: 'item', 'item.order == nil' | sort: 'path' %}
+      {% assign numbered_entries = visible_entries | where_exp: 'item', 'item.order != nil' | sort: 'order' %}
+      {% assign publications = unnumbered_entries | concat: numbered_entries %}
+      {% if publications.size > 0 %}<section id="publications" aria-labelledby="publications-title">
+        <h2 id="publications-title">Publications</h2>
+        {% for entry in publications %}{% include entry.html entry=entry %}{% endfor %}
+      </section>{% endif %}
+      <section id="research" aria-labelledby="research-title">
+        <span id="projects" class="legacy-anchor"></span>
+        <h2 id="research-title">Research &amp; projects</h2>
+        {% assign visible_entries = site.projects | where_exp: 'item', 'item.visible != false' %}
+        {% assign unnumbered_entries = visible_entries | where_exp: 'item', 'item.order == nil' | sort: 'path' %}
+        {% assign numbered_entries = visible_entries | where_exp: 'item', 'item.order != nil' | sort: 'order' %}
+        {% assign projects = unnumbered_entries | concat: numbered_entries %}
+        {% for entry in projects %}{% include entry.html entry=entry %}{% endfor %}
+      </section>
+      <section id="experience" aria-labelledby="experience-title">
+        <span id="experience-" class="legacy-anchor"></span>
+        <h2 id="experience-title">Experience</h2>
+        {% assign visible_entries = site.experience | where_exp: 'item', 'item.visible != false' %}
+        {% assign unnumbered_entries = visible_entries | where_exp: 'item', 'item.order == nil' | sort: 'path' %}
+        {% assign numbered_entries = visible_entries | where_exp: 'item', 'item.order != nil' | sort: 'order' %}
+        {% assign experiences = unnumbered_entries | concat: numbered_entries %}
+        {% for entry in experiences %}{% include entry.html entry=entry %}{% endfor %}
+      </section>
+      <section id="education" aria-labelledby="education-title">
+        <h2 id="education-title">Education</h2>
+        {% for degree in site.data.education %}<article class="entry education-entry">
+          <div class="entry-heading"><h3><a href="{{ degree.url }}">{{ degree.institution | escape }}</a></h3><p class="period">{{ degree.period | escape }}</p></div>
+          <p>{{ degree.degree | escape }}</p>
+          {% if degree.detail %}<p class="metadata">{{ degree.detail | escape }}</p>{% endif %}
+        </article>{% endfor %}
+      </section>
+      <section id="more" aria-labelledby="more-title">
+        <h2 id="more-title">Additional information</h2>
+        <div class="additional">{% capture additional %}{% include more.md %}{% endcapture %}{{ additional | markdownify }}</div>
+      </section>
+    </main>
+    <footer><span>{{ profile.name | escape }}</span><span>Updated {{ profile.updated | escape }}</span></footer>
+  </div>
+</body>
+</html>

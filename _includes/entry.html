@@ -1,0 +1,20 @@
+<article class="entry">
+  <header class="entry-header">
+    <div class="entry-heading">
+      <h3>{{ include.entry.title | escape }}</h3>
+      {% if include.entry.period %}<p class="period">{{ include.entry.period | escape }}</p>{% endif %}
+    </div>
+    {% if include.entry.context %}<p class="metadata">{{ include.entry.context | escape }}</p>{% endif %}
+    {% if include.entry.authors %}<p class="metadata">{{ include.entry.authors | escape }}</p>{% endif %}
+  </header>
+  <div class="entry-content{% if include.entry.image %} with-image{% endif %}">
+    <div class="entry-copy">
+      <div class="entry-body">{{ include.entry.content | markdownify }}</div>
+      {% if include.entry.links.size > 0 %}<p class="entry-links">{% for link in include.entry.links %}<a href="{% if link.url contains '://' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}">{{ link.label | escape }}</a>{% endfor %}</p>{% endif %}
+    </div>
+    {% if include.entry.image %}
+      {% assign image_description = include.entry.image_alt | default: include.entry.title %}
+      <a class="entry-image" href="{{ include.entry.image | relative_url }}" aria-label="View full image: {{ image_description | escape }}"><img src="{{ include.entry.image | relative_url }}" alt="{{ image_description | escape }}" loading="lazy" decoding="async"></a>
+    {% endif %}
+  </div>
+</article>
