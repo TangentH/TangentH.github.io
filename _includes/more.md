@@ -1,12 +1,12 @@
 ### Technical skills
 
-**Programming:** Python, C/C++, MATLAB.
+- **Programming:** Python, C/C++, MATLAB, Java.
 
-**Robotics & vision:** PyTorch, ROS, Gazebo, Webots.
+- **Robotics & vision:** PyTorch, ROS, Gazebo, Webots.
 
-**Development:** Git, Linux.
+- **Development:** Git, Linux.
 
-**Hardware:** STM32, PCB design, FPGA development.
+- **Hardware:** STM32, PCB design, FPGA development.
 
 ### Selected honors
 
